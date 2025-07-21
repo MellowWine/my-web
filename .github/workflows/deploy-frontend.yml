@@ -1,0 +1,72 @@
+# 工作流名称
+name: Deploy Frontend to GitHub Pages
+
+# 触发条件
+on:
+  # 1. 当代码被推送到 main 分支时
+  push:
+    branches: ["main"]
+  # 2. 允许在 GitHub Actions 页面手动触发
+  workflow_dispatch:
+
+# 设置 GITHUB_TOKEN 的权限，以允许部署到 GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 只允许一个并发部署，新的部署会取消正在进行的部署
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # 定义一个名为 "deploy" 的任务
+  deploy:
+    # 设置部署环境
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # 使用最新的 Ubuntu 虚拟机
+    runs-on: ubuntu-latest
+
+    # 定义任务步骤
+    steps:
+      # 第一步：检出代码
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 第二步：设置 Node.js 环境
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18 # 你可以根据你的项目调整版本
+
+      # 第三步：安装前端依赖并构建项目
+      - name: Install and Build
+        # 我们需要进入 frontend 目录来执行这些命令
+        run: |
+          cd frontend
+          npm install
+          npm run build
+        # 设置环境变量，让前端在构建时知道后端的地址
+        # 注意：这里我们暂时使用一个占位符，因为后端还没部署
+        env:
+          VITE_API_BASE_URL: https://your-backend-placeholder.onrender.com/api
+
+      # 第四步：配置 GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 第五步：上传构建好的静态文件 (artifact)
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # 指定要上传的目录，即前端构建后的 dist 目录
+          path: "./frontend/dist"
+
+      # 第六步：部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
