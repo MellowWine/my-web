@@ -1,0 +1,123 @@
+/* ================================== */
+/*        全局重置与主题变量           */
+/* ================================== */
+
+:root {
+  /* 甜蜜主题调色板 */
+  --sweet-pink: #FBCFE8;
+  --sweet-blue: #BFDBFE;
+  --sweet-purple: #8B5CF6;
+  --sweet-bg: #FDF2F8;
+  --sweet-card-bg: #FFFFFF;
+  --sweet-text-dark: #4B5563;
+  --sweet-text-light: #6B7280;
+  --sweet-border: #E5E7EB;
+  --sweet-success: #4ADE80;
+  --sweet-danger: #F87171;
+}
+
+/* 基础重置 */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--sweet-bg); /* 将背景色设置在 body 上 */
+  color: var(--sweet-text-dark);
+}
+
+/* Vue 应用根容器样式 */
+#app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex; /* 使用 flex 布局 */
+  flex-direction: column;
+  font-weight: normal;
+  /* 确保这里没有 max-width, margin, padding 或 grid 布局 */
+}
+
+/* 移除 Vite 默认模板中所有不必要的媒体查询 */
+/* @media (min-width: 1024px) { ... } 这整个代码块都已被删除 */
+
+/* ================================== */
+/*          通用组件样式               */
+/* ================================== */
+
+/* 表单容器样式 */
+.form-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--sweet-card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: var(--sweet-text-dark);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+/* 输入框样式 */
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  border: 1px solid var(--sweet-border);
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--sweet-purple);
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+/* 提交按钮样式 */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: linear-gradient(to right, var(--sweet-pink), var(--sweet-blue));
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+button[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+/* 消息提示样式 */
+.message {
+  text-align: center;
+  margin-top: 1rem;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.message.success {
+  color: #052e16;
+  background-color: #dcfce7;
+  border: 1px solid var(--sweet-success);
+}
+
+.message.error {
+  color: #991b1b;
+  background-color: #fee2e2;
+  border: 1px solid var(--sweet-danger);
+}
