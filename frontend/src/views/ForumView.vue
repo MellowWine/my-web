@@ -1,27 +1,27 @@
 <template>
     <div class="forum-page">
-        <h1>论坛</h1>
-        <p>与社区成员交流想法。</p>
+        <h1>扣扣空间</h1>
+        <p>发布你的动态。</p>
 
         <!-- 发帖表单 -->
         <div v-if="isLoggedIn" class="post-form">
             <form @submit.prevent="handlePostSubmit">
                 <textarea v-model="newPostContent" placeholder="分享你的新鲜事..." rows="4" required></textarea>
                 <button type="submit" :disabled="isSubmitting">
-                    {{ isSubmitting ? '发布中...' : '发布帖子' }}
+                    {{ isSubmitting ? '发布中...' : '发布' }}
                 </button>
             </form>
             <p v-if="postError" class="message error">{{ postError }}</p>
         </div>
         <div v-else class="login-prompt">
-            <p>请<RouterLink to="/login">登录</RouterLink>后发布帖子。</p>
+            <p>请<RouterLink to="/login">登录</RouterLink>后发布。</p>
         </div>
 
         <!-- 帖子列表 -->
         <div class="posts-list">
-            <div v-if="loading" class="loading-spinner">正在加载帖子...</div>
+            <div v-if="loading" class="loading-spinner">正在加载...</div>
             <div v-else-if="fetchError" class="message error">{{ fetchError }}</div>
-            <div v-else-if="posts.length === 0">这里还没有帖子，快来发布第一条吧！</div>
+            <div v-else-if="posts.length === 0">这里还没有动态，快来发布第一条吧！</div>
 
             <div v-else v-for="post in posts" :key="post.id" class="post-card">
                 <div class="post-header">
@@ -90,7 +90,7 @@ const fetchPosts = async () => {
         const response = await axios.get('http://localhost:3000/api/posts');
         posts.value = response.data;
     } catch (error) {
-        fetchError.value = '无法加载帖子，请稍后再试。';
+        fetchError.value = '无法加载，请稍后再试。';
         console.error(error);
     } finally {
         loading.value = false;
@@ -100,7 +100,7 @@ const fetchPosts = async () => {
 // 提交新帖子
 const handlePostSubmit = async () => {
     if (!newPostContent.value.trim()) {
-        postError.value = '帖子内容不能为空。';
+        postError.value = '内容不能为空。';
         return;
     }
     isSubmitting.value = true;
@@ -123,7 +123,7 @@ const handlePostSubmit = async () => {
 
 // 删除帖子
 const deletePost = async (postId) => {
-    if (!confirm('你确定要删除这条帖子吗？')) {
+    if (!confirm('你确定要删除这条动态吗？')) {
         return;
     }
     try {
