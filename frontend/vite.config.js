@@ -11,6 +11,9 @@ export default defineConfig({
     vue(),
     vueDevTools(),
   ],
+    build: {
+    sourcemap: true // 确保这一行为 true
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
