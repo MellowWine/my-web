@@ -52,7 +52,27 @@ const router = useRouter();
 
 const updateUserStatus = () => {
   const token = localStorage.getItem('token');
-  if (token) { try { const decoded = jwtDecode(token); if (decoded.exp * 1000 > Date.now()) { isLoggedIn.value = true; username.value = decoded.username; } else { logout(false); } } catch (error) { console.error('Invalid token:', error); logout(false); } } else { isLoggedIn.value = false; username.value = ''; }
+  if (token) {
+    try {
+      if (typeof token !== 'string' || token.split('.').length !== 3) {
+        // 如果格式不对，就不要尝试解码了，直接抛出一个自定义错误，
+        // 或者直接调用 logout()。
+        throw new Error("Token is not a valid JWT format.");
+      }
+      const decoded = jwtDecode(token);
+      if (decoded.exp * 1000 > Date.now()) {
+        isLoggedIn.value = true; username.value = decoded.username;
+      }
+      else {
+        logout(false);
+      }
+    }
+    catch (error) {
+      console.error('Invalid token:', error); logout(false);
+    }
+  } else {
+    isLoggedIn.value = false; username.value = '';
+  }
 };
 const logout = (redirect = true) => {
   localStorage.removeItem('token');
