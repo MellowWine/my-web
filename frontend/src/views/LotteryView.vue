@@ -68,7 +68,7 @@ const fetchUserPoints = async () => {
     const token = localStorage.getItem('token');
     if (!token) return;
     try {
-        const response = await axios.get('http://localhost:3000/api/profile', {
+        const response = await axios.get('import.meta.env.VITE_API_URL;/api/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         userPoints.value = response.data.user.points;
@@ -95,7 +95,7 @@ const drawCard = async () => {
 
     try {
         const token = localStorage.getItem('token');
-        await axios.post('http://localhost:3000/api/lottery/draw', { result }, { headers: { 'Authorization': `Bearer ${token}` } });
+        await axios.post('import.meta.env.VITE_API_URL;/api/lottery/draw', { result }, { headers: { 'Authorization': `Bearer ${token}` } });
         userPoints.value -= 1;
         fetchHistory();
         setTimeout(() => {
@@ -117,7 +117,7 @@ const fetchHistory = async () => {
     historyError.value = '';
     try {
         const token = localStorage.getItem('token');
-        const response = await axios.get('http://localhost:3000/api/lottery/history', { headers: { 'Authorization': `Bearer ${token}` } });
+        const response = await axios.get('import.meta.env.VITE_API_URL;/api/lottery/history', { headers: { 'Authorization': `Bearer ${token}` } });
         lotteryHistory.value = response.data;
     } catch (error) {
         historyError.value = '无法加载抽奖记录。';
@@ -131,7 +131,7 @@ const clearHistory = async () => {
     isClearing.value = true;
     try {
         const token = localStorage.getItem('token');
-        await axios.delete('http://localhost:3000/api/lottery/history', { headers: { 'Authorization': `Bearer ${token}` } });
+        await axios.delete('import.meta.env.VITE_API_URL;/api/lottery/history', { headers: { 'Authorization': `Bearer ${token}` } });
         lotteryHistory.value = [];
         alert('抽卡记录已成功清空！');
     } catch (error) {

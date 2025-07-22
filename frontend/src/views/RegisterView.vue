@@ -35,7 +35,7 @@ const handleRegister = async () => {
     isError.value = false;
     message.value = '';
     try {
-        await axios.post('http://localhost:3000/api/register', {
+        await axios.post('import.meta.env.VITE_API_URL;/api/register', {
             username: username.value,
             password: password.value,
         });

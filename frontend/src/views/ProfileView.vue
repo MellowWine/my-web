@@ -41,7 +41,7 @@ onMounted(async () => {
     }
 
     try {
-        const response = await axios.get('http://localhost:3000/api/profile', {
+        const response = await axios.get('import.meta.env.VITE_API_URL;/api/profile', {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         profile.value = response.data;

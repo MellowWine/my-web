@@ -87,7 +87,7 @@ const fetchPosts = async () => {
     try {
         loading.value = true;
         // 使用 axios，因为 apiClient 方案未被采纳
-        const response = await axios.get('http://localhost:3000/api/posts');
+        const response = await axios.get('import.meta.env.VITE_API_URL;/api/posts');
         posts.value = response.data;
     } catch (error) {
         fetchError.value = '无法加载，请稍后再试。';
@@ -107,7 +107,7 @@ const handlePostSubmit = async () => {
     postError.value = '';
     const token = localStorage.getItem('token');
     try {
-        const response = await axios.post('http://localhost:3000/api/posts',
+        const response = await axios.post('import.meta.env.VITE_API_URL;/api/posts',
             { content: newPostContent.value },
             { headers: { 'Authorization': `Bearer ${token}` } }
         );
@@ -128,7 +128,7 @@ const deletePost = async (postId) => {
     }
     try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:3000/api/posts/${postId}`, {
+        await axios.delete(`import.meta.env.VITE_API_URL;/api/posts/${postId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         posts.value = posts.value.filter(p => p.id !== postId);
@@ -147,7 +147,7 @@ const ratePost = async (postId, score) => {
     try {
         const token = localStorage.getItem('token');
         await axios.post(
-            `http://localhost:3000/api/posts/${postId}/rate`,
+            `import.meta.env.VITE_API_URL;/api/posts/${postId}/rate`,
             { score },
             { headers: { 'Authorization': `Bearer ${token}` } }
         );

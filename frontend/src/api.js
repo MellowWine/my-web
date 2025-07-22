@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:3000/api', // 设置基础URL
+  baseURL: 'import.meta.env.VITE_API_URL;/api', // 设置基础URL
   headers: {
     'Content-Type': 'application/json'
   }
